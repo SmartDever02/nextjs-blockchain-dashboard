@@ -16,7 +16,7 @@ export default function CardList({ cardHeading, items, renderRow, viewAll }: Pro
       <p className="p-4 text-sm font-normal border-b border-b-primary-border">
         {cardHeading}
       </p>
-      <ol className="p-4 *:py-[14px] *:border-b *:border-b-primary-border border-b border-primary-border max-h-[30rem] overflow-auto">
+      <ol className="p-4 *:py-[14px] *:border-b *:border-b-primary-border border-b border-primary-border sm:max-h-[30rem] overflow-auto">
         {items.map((item: any) => renderRow(item))}
       </ol>
       <Link

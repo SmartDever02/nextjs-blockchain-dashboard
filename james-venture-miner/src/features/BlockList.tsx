@@ -11,14 +11,14 @@ import TicketIcon from '@heroicons/react/24/outline/TicketIcon'
 import { fetchBlockLists } from '@/services/eth'
 
 export default async function BlockList({ chain }: { chain: string }) {
-  const data = await fetchBlockLists(15);
+  const data = await fetchBlockLists(15)
 
   return (
     <CardList
       cardHeading="Latest Blocks"
       viewAll={{
         href: '/chain/eth/blocks',
-        text: 'View all blocks'
+        text: 'View all blocks',
       }}
       items={data.items.slice(0, 8)}
       renderRow={(item) => {
@@ -44,11 +44,11 @@ export default async function BlockList({ chain }: { chain: string }) {
                 </div>
               </div>
             </div>
-            <div className="sm:w-2/3 flex gap-x-2 justify-between items-center">
+            <div className="sm:w-2/3 flex flex-wrap gap-y-1 gap-x-2 justify-between items-center">
               <div className="flex flex-col sm:gap-y-1 flex-1">
                 <span className="text-sm">
                   Fee Recipient{' '}
-                  <Link href="#">
+                  <Link href={'/chain/eth/address/' + item.miner.hash}>
                     {item.miner.name || shortenAddress(item.miner.hash)}
                   </Link>
                 </span>

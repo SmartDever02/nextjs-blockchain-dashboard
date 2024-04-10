@@ -15,16 +15,15 @@ import {
   BlockDetailListItemValueWrapper as ListItemValueWrapper,
   BlockDetailListDivider as ListDivider,
 } from '@/components/DetailViewCard'
+import { fetchBlockDetail } from '@/services/eth'
+import { ClockIcon } from '@heroicons/react/24/outline'
 
 export default async function BlockDetail({
   params,
 }: {
   params: { hash: string }
 }) {
-  const res = await fetch(
-    `https://eth.blockscout.com/api/v2/blocks/${params.hash}`
-  )
-  const data = await res.json()
+  const data = await fetchBlockDetail(params.hash)
 
   return (
     <main className="container mx-auto pb-12">
@@ -35,7 +34,7 @@ export default async function BlockDetail({
         </div>
       </section>
 
-      <DetailViewCardContainer className='mt-10'>
+      <DetailViewCardContainer className="mt-10">
         <ul className="*:mb-4 *:flex text-xs sm:*:text-sm">
           <ListItemWrapper>
             <ListTitle>Block Height:</ListTitle>
@@ -66,8 +65,12 @@ export default async function BlockDetail({
           <ListItemWrapper>
             <ListTitle>Timestamp:</ListTitle>
             <ListItemValueWrapper>
-              {getAgeFromTimestamp(data.timestamp)}
-              <span>({new Date(data.timestamp).toLocaleString()})</span>
+              <p className="inline-flex items-center">
+                <ClockIcon className="w-4 h-4 inline" />
+                {getAgeFromTimestamp(data.timestamp)}
+                {' '}
+                ({new Date(data.timestamp).toUTCString()})
+              </p>
             </ListItemValueWrapper>
           </ListItemWrapper>
           <ListItemWrapper>
@@ -88,7 +91,8 @@ export default async function BlockDetail({
             <ListTitle>Fee Recipient:</ListTitle>
             <ListItemValueWrapper>
               <Link href={'#' + data.miner.hash}>
-                {data.miner.ens_domain_name || shortenAddress(data.miner.hash)}
+                {data.miner.implementation_name ||
+                  shortenAddress(data.miner.hash)}
               </Link>
             </ListItemValueWrapper>
           </ListItemWrapper>

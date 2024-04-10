@@ -39,10 +39,16 @@ export default async function TransactionList({ chain }: { chain: string }) {
           <div className="sm:w-2/3 xl:w-7/12 flex justify-between items-center">
             <div className="flex flex-col gap-y-1">
               <span className="text-sm">
-                From <Link href="#">{shortenAddress(item.from.hash)}</Link>
+                From{' '}
+                <Link href={'/chain/eth/address/' + item.from.hash}>
+                  {shortenAddress(item.from.hash)}
+                </Link>
               </span>
               <span className="text-sm">
-                To <Link href="#">{shortenAddress(item.to.hash)}</Link>
+                To{' '}
+                <Link href={'/chain/eth/address/' + item.to.hash}>
+                  {shortenAddress(item.to.hash)}
+                </Link>
               </span>
             </div>
             <div className="text-[10px] xl:text-xs px-2 py-[6px] border border-primary-border rounded">

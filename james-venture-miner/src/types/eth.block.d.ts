@@ -43,6 +43,7 @@ export interface IEthMiner {
   watchlist_names: IWatchlistName[];
   public_tags: IAddressTag[];
   is_verified: boolean;
+  ens_domain_name: string;
 }
 
 export interface IAddressTag {

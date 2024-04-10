@@ -56,7 +56,7 @@ export default async function TransactionDetail({
             <ListItemValueWrapper>
               {getAgeFromTimestamp(data.timestamp)}
               <span className="pl-1">
-                ({new Date(data.timestamp).toLocaleString()})
+                ({new Date(data.timestamp).toUTCString()})
               </span>
             </ListItemValueWrapper>
           </ListItemWrapper>
