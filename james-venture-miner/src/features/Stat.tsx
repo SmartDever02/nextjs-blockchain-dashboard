@@ -1,5 +1,6 @@
 import cx from 'classnames'
 import { PropsWithChildren, Suspense } from 'react'
+import Image from 'next/image'
 
 import TransactionChart from '@/features/TransactionChart'
 import {
@@ -94,12 +95,14 @@ function StatItem(props: StatItemProps) {
   return (
     <div className="flex items-center gap-x-3">
       {props.imageSrc && (
-        <img
+        <Image
           src={props.imageSrc}
-          alt={props.imageAlt}
+          alt={props.imageAlt || ""}
           width={48}
           height={48}
           className="bg-[#121212] rounded-md p-2 xl:p-3 w-8 h-8 xl:w-12 xl:h-12"
+          quality={100}
+          draggable={false}
         />
       )}
 

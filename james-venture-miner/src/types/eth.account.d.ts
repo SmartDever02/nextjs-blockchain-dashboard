@@ -42,3 +42,10 @@ export interface IEthToken {
   exchange_rate: string
   total_supply: string
 }
+
+export interface IEthAccountCounter {
+  gas_usage_count: string
+  token_transfers_count: string
+  transactions_count: string
+  validations_count: string
+}

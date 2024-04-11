@@ -11,6 +11,7 @@ export const shortenAddress = (
   startUntil: number = 6,
   fromEnd: number = 6
 ) => {
+  if(startUntil === Infinity || fromEnd === Infinity) return address;
   return `${address?.substring(0, startUntil)}...${address?.substring(
     address.length - fromEnd
   )}`
@@ -110,7 +111,7 @@ export function analyzeQuickSearchResponse(res: IQuickSearchResult) {
     case 'token':
       generatedHref = `/chain/eth/token/${res.address}`
       display = res.address
-      moreDetail = `${formatNumberWithCommas(res.total_supply)} (${res.name})`
+      moreDetail = `${formatNumberWithCommas(res.total_supply)} (${res.name}) $${res.exchange_rate}`
       break
     default:
       break

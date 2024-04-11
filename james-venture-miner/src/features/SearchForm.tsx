@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers'
 import Link from 'next/link'
+import Image from 'next/image'
 
 import { fetchQuickSearchResult } from '@/services/eth'
 import SearchSubmitButton from '@/components/Search.Client.Button'
@@ -88,7 +89,7 @@ function SearchResponseItemAvatar(props: any) {
   }
   if (props.type === 'token') {
     return props.icon_url ? (
-      <img alt={props.symbol} src={props.icon_url} className="w-4 h-4" />
+      <Image width={16} height={16} alt={props.symbol} src={props.icon_url} className="w-4 h-4" quality={100} draggable={false} />
     ) : (
       <div className="w-4 h-4 rounded-full leading-4 text-center bg-primary">
         {props?.symbol.slice(0, 1)}

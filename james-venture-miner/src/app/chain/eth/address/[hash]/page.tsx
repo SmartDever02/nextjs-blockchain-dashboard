@@ -1,17 +1,30 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 import { DetailViewCardContainer } from '@/components/DetailViewCard'
-import { getEtherFromWei, shortenAddress } from '@/utils/eth'
+import {
+  formatNumberWithCommas,
+  getEtherFromWei,
+  shortenAddress,
+} from '@/utils/eth'
 
-import { fetchAccount } from '@/services/eth'
-
+import { fetchAccountCounterInfo, fetchAccountInfo } from '@/services/eth'
+import type { PropsWithChildren } from 'react'
+import {
+  ArrowTrendingUpIcon,
+  InformationCircleIcon,
+} from '@heroicons/react/24/outline'
 
 export default async function AccountDetail({
   params,
 }: {
   params: { hash: string }
 }) {
-  const data = await fetchAccount(params.hash);
+  const data = await fetchAccountInfo(params.hash)
+  const counterData = await fetchAccountCounterInfo(params.hash)
+
+  const animatableIconClass =
+    'opacity-20 translate-x-5 translate-y-5 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-50 group-hover:scale-110 transition-all duration-300 w-20 h-20 absolute bottom-0 right-0'
 
   return (
     <main className="container mx-auto pb-12">
@@ -22,27 +35,44 @@ export default async function AccountDetail({
         </div>
       </section>
 
-      <div className="mt-10 grid grid-cols-3 gap-x-2">
-        <DetailViewCardContainer>
-          <div className="flex flex-col gap-5 text-sm">
-            <div className="font-semibold">Overview</div>
+      <div className="mt-10 grid grid-cols-2 lg:grid-cols-3 gap-x-2">
+        <DetailViewCardContainer className='relative group overflow-hidden' >
+          <AddressInfoCard heading="Overview">
             <div>
-              <p className="text-gray-bb text-xs mb-1">ETH BALANCE</p>
+              <InfoTitle>ETH BALANCE</InfoTitle>
               <p>{getEtherFromWei(data.coin_balance, true, 20)}</p>
             </div>
             <div>
-              <p className="text-gray-bb text-xs mb-1">ETH VALUE</p>
-              <p>{getEtherFromWei(data.coin_balance, true, 20)}</p>
+              <InfoTitle>ETH VALUE</InfoTitle>
+              <p>
+                $
+                {Number(
+                  (
+                    Number(getEtherFromWei(data.coin_balance, false, 20)) *
+                    Number(data.exchange_rate)
+                  ).toFixed(2)
+                ).toLocaleString('en-US')}
+                {` @( $${data.exchange_rate}/ETH)`}
+              </p>
             </div>
-          </div>
+          </AddressInfoCard>
+          <Image
+            src={`https://etherscan.io/images/svg/brands/ethereum-original-light.svg`}
+            alt="ethereum"
+            width={80}
+            height={80}
+            draggable={false}
+            quality={100}
+            className={animatableIconClass}
+          />
         </DetailViewCardContainer>
 
-        <DetailViewCardContainer>
-          <div className="flex flex-col gap-5 text-sm">
-            <div className="font-semibold">More Info</div>
+        <DetailViewCardContainer className="relative group overflow-hidden">
+          <AddressInfoCard heading="More Info">
+            {/* Contract creation */}
             {data.creator_address_hash && data.creation_tx_hash && (
               <div>
-                <p className="text-gray-bb text-xs mb-1">CONTRACT CREATOR</p>
+                <InfoTitle>CONTRACT CREATOR</InfoTitle>
                 <p>
                   <Link
                     href={'/chain/eth/address/' + data.creator_address_hash}
@@ -56,9 +86,67 @@ export default async function AccountDetail({
                 </p>
               </div>
             )}
-          </div>
+
+            {/* Last balance update */}
+            {
+              <div>
+                <InfoTitle>Last balance update</InfoTitle>
+                <Link
+                  href={
+                    '/chain/eth/block/' + data.block_number_balance_updated_at
+                  }
+                >
+                  {data.block_number_balance_updated_at}
+                </Link>{' '}
+              </div>
+            }
+          </AddressInfoCard>
+          <InformationCircleIcon className={animatableIconClass} />
+        </DetailViewCardContainer>
+
+        <DetailViewCardContainer className="relative group overflow-hidden">
+          <AddressInfoCard heading="Counting Info">
+            <div className="flex flex-col gap-y-2">
+              <div>
+                <InfoTitle>Gas usage</InfoTitle>
+                {formatNumberWithCommas(counterData.gas_usage_count)}
+              </div>
+
+              <div>
+                <InfoTitle>Token Transfers</InfoTitle>
+                {formatNumberWithCommas(counterData.token_transfers_count)}
+              </div>
+
+              <div>
+                <InfoTitle>Transactions</InfoTitle>
+                {formatNumberWithCommas(counterData.transactions_count)}
+              </div>
+            </div>
+          </AddressInfoCard>
+          <ArrowTrendingUpIcon
+            className={`-rotate-[125deg] ${animatableIconClass}`}
+          />
         </DetailViewCardContainer>
       </div>
+
+      <div></div>
     </main>
   )
+}
+
+interface Props extends PropsWithChildren {
+  heading: string
+}
+
+function AddressInfoCard(props: Props) {
+  return (
+    <div className="flex flex-col gap-5 text-sm sticky z-10">
+      <div className="font-semibold">{props.heading}</div>
+      {props.children}
+    </div>
+  )
+}
+
+function InfoTitle(props: PropsWithChildren) {
+  return <p className="text-sm mb-1 text-gray-bb">{props.children}</p>
 }

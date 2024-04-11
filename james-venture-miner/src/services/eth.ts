@@ -1,4 +1,4 @@
-import { IEthAccount } from '@/types/eth.account'
+import { IEthAccount, IEthAccountCounter } from '@/types/eth.account'
 import { IEthBlock, IEtherBlockArrayResponse } from '@/types/eth.block'
 import {
   IEtherStat,
@@ -45,7 +45,7 @@ export async function fetchStat(revalidate: number = 60): Promise<IEtherStat> {
   return data
 }
 
-export async function fetchAccount(
+export async function fetchAccountInfo(
   address: string,
   revalidate: number = 60
 ): Promise<IEthAccount> {
@@ -74,6 +74,23 @@ export async function fetchQuickSearchResult(query: string) {
     | ISearchResultBlock
     | ISearchResultTransaction
   > = await res.json()
+
+  return data
+}
+
+export async function fetchAccountCounterInfo(
+  address: string,
+  revalidate: number = 60
+) {
+  const res = await fetch(
+    `${process.env.BASE_API_URL}/addresses/${address}/counters`,
+    {
+      next: {
+        revalidate,
+      },
+    }
+  )
+  const data: IEthAccountCounter = await res.json()
 
   return data
 }
