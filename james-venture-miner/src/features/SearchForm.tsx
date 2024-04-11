@@ -8,7 +8,7 @@ import { IQuickSearchResult } from '@/types/eth.stat'
 import { analyzeQuickSearchResponse } from '@/utils/eth'
 import {
   ArrowsRightLeftIcon,
-  TicketIcon,
+  CubeTransparentIcon,
   UserCircleIcon,
   WalletIcon,
 } from '@heroicons/react/24/outline'
@@ -26,7 +26,6 @@ export default async function SearchForm() {
     cookies().set({
       name: 'quicksearch',
       value: JSON.stringify(data),
-      path: '/',
     })
   }
 
@@ -82,7 +81,7 @@ export default async function SearchForm() {
 
 function SearchResponseItemAvatar(props: any) {
   if (props.type === 'block') {
-    return <TicketIcon className="w-4 h-4" />
+    return <CubeTransparentIcon className="w-4 h-4" />
   }
   if (props.type === 'transaction') {
     return <ArrowsRightLeftIcon className="w-4 h-4" />

@@ -4,8 +4,8 @@ import { PropsWithChildren, Suspense } from 'react'
 import TransactionChart from '@/features/TransactionChart'
 import {
   ArrowsRightLeftIcon,
+  CubeTransparentIcon,
   GlobeAltIcon,
-  TicketIcon,
 } from '@heroicons/react/24/outline'
 
 import { fetchStat } from '@/services/eth'
@@ -63,7 +63,7 @@ export default async function Stat() {
         />
         <StatHorizontalDivider />
         <StatItem
-          svgNode={<TicketIcon className="w-6 h-6" />}
+          svgNode={<CubeTransparentIcon className="w-6 h-6" />}
           label="LAST FINALIZED BLOCK"
           value={() => (
             <p className="text-sm">
@@ -191,7 +191,7 @@ export function StatLoadingUI() {
         />
         <StatHorizontalDivider />
         <StatItem
-          svgNode={<TicketIcon className="w-6 h-6" />}
+          svgNode={<CubeTransparentIcon className="w-6 h-6" />}
           label="LAST FINALIZED BLOCK"
           value={() => skeletonP}
         />

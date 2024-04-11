@@ -16,7 +16,7 @@ import {
   BlockDetailListDivider as ListDivider,
 } from '@/components/DetailViewCard'
 import { fetchBlockDetail } from '@/services/eth'
-import { ClockIcon } from '@heroicons/react/24/outline'
+import { ClockIcon, CubeTransparentIcon } from '@heroicons/react/24/outline'
 
 export default async function BlockDetail({
   params,
@@ -39,6 +39,7 @@ export default async function BlockDetail({
           <ListItemWrapper>
             <ListTitle>Block Height:</ListTitle>
             <div className="sm:w-3/4 max-sm:text-xs gap-x-2 flex items-center">
+              <CubeTransparentIcon className="w-4 h-4" />
               {data.height}
               <div className="flex gap-x-1">
                 <ArrowLink
@@ -65,11 +66,11 @@ export default async function BlockDetail({
           <ListItemWrapper>
             <ListTitle>Timestamp:</ListTitle>
             <ListItemValueWrapper>
-              <p className="inline-flex items-center">
+              <p className="inline-flex items-center gap-x-1">
                 <ClockIcon className="w-4 h-4 inline" />
-                {getAgeFromTimestamp(data.timestamp)}
-                {' '}
-                ({new Date(data.timestamp).toUTCString()})
+                {`${getAgeFromTimestamp(data.timestamp)} (${new Date(
+                  data.timestamp
+                ).toUTCString()})`}
               </p>
             </ListItemValueWrapper>
           </ListItemWrapper>
@@ -91,8 +92,7 @@ export default async function BlockDetail({
             <ListTitle>Fee Recipient:</ListTitle>
             <ListItemValueWrapper>
               <Link href={'#' + data.miner.hash}>
-                {data.miner.implementation_name ||
-                  shortenAddress(data.miner.hash)}
+                {data.miner.implementation_name || data.miner.hash}
               </Link>
             </ListItemValueWrapper>
           </ListItemWrapper>

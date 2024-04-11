@@ -6,9 +6,9 @@ import {
   getEtherFromWei,
   shortenAddress,
 } from '@/utils/eth'
-import TicketIcon from '@heroicons/react/24/outline/TicketIcon'
 
 import { fetchBlockLists } from '@/services/eth'
+import { CubeTransparentIcon } from '@heroicons/react/24/outline'
 
 export default async function BlockList({ chain }: { chain: string }) {
   const data = await fetchBlockLists(15)
@@ -29,7 +29,7 @@ export default async function BlockList({ chain }: { chain: string }) {
           >
             <div className="sm:w-1/3 flex items-start gap-x-2">
               <div className="max-sm:hidden min-w-8 h-8 xl:min-w-12 xl:h-12 rounded-lg bg-[#121212] flex justify-center items-center">
-                <TicketIcon className="w-5 h-5 xl:w-6 xl:h-6 opacity-70" />
+                <CubeTransparentIcon className="w-5 h-5 xl:w-6 xl:h-6 opacity-70" />
               </div>
               <div className="flex sm:flex-col items-end gap-1">
                 <span className="sm:hidden text-sm">Block</span>
