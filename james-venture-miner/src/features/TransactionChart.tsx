@@ -1,13 +1,18 @@
 import ReChart from '@/components/Chart'
+import { fetchTransactionChart } from '@/services/eth'
+import { fetchTransactionChart as fetchOptTransactionChart } from '@/services/eth'
 
-export default async function TransactionChart() {
-  const response = await fetch(
-    `https://eth.blockscout.com/api/v2/stats/charts/transactions`,
-    {
-      next: { revalidate: 3600 },
-    }
-  )
-  const data = await response.json()
+interface Props {
+  chain: 'OPT' | 'ETH'
+}
+
+export default async function TransactionChart(props: Props) {
+  let data
+  if (props.chain === 'OPT') {
+    data = await fetchOptTransactionChart()
+  } else {
+    data = await fetchTransactionChart()
+  }
 
   return (
     <div className="w-full h-[100px]">

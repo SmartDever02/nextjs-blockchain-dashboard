@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 import CardList from '@/components/CardList'
-import { getAgeFromTimestamp, shortenAddress } from '@/utils/eth'
+import { getAgeFromTimestamp, getEtherFromWei, shortenAddress } from '@/utils/eth'
 import { ArrowsRightLeftIcon } from '@heroicons/react/24/outline'
 
 import { fetchTransactionLists } from '@/services/eth'
@@ -52,7 +52,7 @@ export default async function TransactionList({ chain }: { chain: string }) {
               </span>
             </div>
             <div className="text-[10px] xl:text-xs px-2 py-[6px] border border-primary-border rounded">
-              {item.value} ETH
+              {getEtherFromWei(item.value, true, 10)}
             </div>
           </div>
         </li>

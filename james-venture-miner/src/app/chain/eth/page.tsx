@@ -1,6 +1,7 @@
 import { Suspense } from 'react'
-import Stat, { StatLoadingUI } from '@/features/Stat'
+import { StatLoadingUI } from '@/components/StatBoard'
 
+import Stat from '@/features/Stat'
 import TransactionList from '@/features/TransactionList'
 import BlockList from '@/features/BlockList'
 import Banner from '@/features/Banner'

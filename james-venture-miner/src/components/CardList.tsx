@@ -1,18 +1,24 @@
 import Link from 'next/link'
+import { PropsWithChildren } from 'react'
 
 interface PropsType {
   cardHeading: string
   items: any[]
   renderRow: (item: any) => React.ReactNode
   viewAll: {
-    text: string;
-    href: string;
+    text: string
+    href: string
   }
 }
 
-export default function CardList({ cardHeading, items, renderRow, viewAll }: PropsType) {
+export default function CardList({
+  cardHeading,
+  items,
+  renderRow,
+  viewAll,
+}: PropsType) {
   return (
-    <section className="shadow-primary-card border border-primary-border rounded-lg">
+    <CardWrapper>
       <p className="p-4 text-sm font-normal border-b border-b-primary-border">
         {cardHeading}
       </p>
@@ -25,6 +31,14 @@ export default function CardList({ cardHeading, items, renderRow, viewAll }: Pro
       >
         {viewAll.text}
       </Link>
+    </CardWrapper>
+  )
+}
+
+export function CardWrapper(props: PropsWithChildren) {
+  return (
+    <section className="shadow-primary-card border border-primary-border rounded-lg">
+      {props.children}
     </section>
   )
 }

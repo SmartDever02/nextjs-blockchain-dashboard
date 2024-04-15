@@ -7,14 +7,14 @@ export interface IEtherStat {
   total_gas_used: string
   transactions_today: string
   gas_used_today: string
-  gas_prices: IEtherGasPrices
+  gas_prices: IGasPrices
   static_gas_price: string
   market_cap: string
   network_utilization_percentage: number
   coin_price_change_percentage: number | string
 }
 
-export interface IEtherGasPrices {
+export interface IGasPrices {
   average: number
   fast: number
   slow: number

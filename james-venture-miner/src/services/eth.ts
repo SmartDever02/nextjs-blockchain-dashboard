@@ -12,7 +12,7 @@ import { IEthTransactionListResponse } from '@/types/eth.tx'
 export async function fetchBlockLists(
   revalidate: number = 15
 ): Promise<IEtherBlockArrayResponse> {
-  const res = await fetch(`${process.env.BASE_API_URL}/blocks?type=block`, {
+  const res = await fetch(`${process.env.BASE_ETH_API_URL}/blocks?type=block`, {
     next: { revalidate },
   })
   const data: IEtherBlockArrayResponse = await res.json()
@@ -24,7 +24,7 @@ export async function fetchTransactionLists(
   revalidate: number = 10
 ): Promise<IEthTransactionListResponse> {
   const res = await fetch(
-    `${process.env.BASE_API_URL}/transactions?filter=validated&type=token_transfer%2Ccontract_creation%2Ccontract_call%2Ccoin_transfer&method=approve%2Ctransfer`,
+    `${process.env.BASE_ETH_API_URL}/transactions?filter=validated`,
     {
       next: { revalidate },
     }
@@ -35,7 +35,7 @@ export async function fetchTransactionLists(
 }
 
 export async function fetchStat(revalidate: number = 60): Promise<IEtherStat> {
-  const response = await fetch(`${process.env.BASE_API_URL}/stats`, {
+  const response = await fetch(`${process.env.BASE_ETH_API_URL}/stats`, {
     next: {
       revalidate,
     },
@@ -49,7 +49,7 @@ export async function fetchAccountInfo(
   address: string,
   revalidate: number = 60
 ): Promise<IEthAccount> {
-  const res = await fetch(`${process.env.BASE_API_URL}/addresses/${address}`, {
+  const res = await fetch(`${process.env.BASE_ETH_API_URL}/addresses/${address}`, {
     next: {
       revalidate,
     },
@@ -60,14 +60,14 @@ export async function fetchAccountInfo(
 }
 
 export async function fetchBlockDetail(hash: string): Promise<IEthBlock> {
-  const res = await fetch(`${process.env.BASE_API_URL}/blocks/${hash}`)
+  const res = await fetch(`${process.env.BASE_ETH_API_URL}/blocks/${hash}`)
   const data: IEthBlock = await res.json()
 
   return data
 }
 
 export async function fetchQuickSearchResult(query: string) {
-  const res = await fetch(`${process.env.BASE_API_URL}/search/quick?q=${query}`)
+  const res = await fetch(`${process.env.BASE_ETH_API_URL}/search/quick?q=${query}`)
   const data: Array<
     | ISearchResultToken
     | ISearchResultAddressOrContract
@@ -83,7 +83,7 @@ export async function fetchAccountCounterInfo(
   revalidate: number = 60
 ) {
   const res = await fetch(
-    `${process.env.BASE_API_URL}/addresses/${address}/counters`,
+    `${process.env.BASE_ETH_API_URL}/addresses/${address}/counters`,
     {
       next: {
         revalidate,
@@ -93,4 +93,16 @@ export async function fetchAccountCounterInfo(
   const data: IEthAccountCounter = await res.json()
 
   return data
+}
+
+export async function fetchTransactionChart() {
+  const response = await fetch(
+    `${process.env.BASE_ETH_API_URL}/stats/charts/transactions`,
+    {
+      next: { revalidate: 3600 },
+    }
+  )
+  const data = await response.json()
+
+  return data;
 }
