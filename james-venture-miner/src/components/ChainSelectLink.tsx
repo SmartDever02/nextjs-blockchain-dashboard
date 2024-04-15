@@ -13,14 +13,14 @@ export default function ChainSelectLink(props: Props) {
   return (
     <Link
       href={props.href}
-      className="group p-5 shadow-primary-card border border-primary-border rounded-xl hover:border-white/20 transition-all duration-200 text-white flex flex-col relative"
+      className="group p-5 shadow-primary-card border border-primary-border rounded-xl hover:border-white/20 transition-all duration-200 text-white flex flex-col gap-y-5 relative"
     >
       <Image
         src={props.imageSrc}
         alt="Ethereum"
         width={120}
         height={120}
-        className="absolute bottom-3 right-3 opacity-20 group-hover:opacity-40 transition-all duration-200"
+        className="absolute bottom-3 right-3 opacity-20 group-hover:opacity-40 transition-all duration-200 w-24 h-24 lg:w-[120px] lg:h-[120px]"
       />
 
       <h2 className="text-xl font-semibold flex items-center gap-x-2">

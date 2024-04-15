@@ -4,9 +4,9 @@ import ChainSelectLink from '@/components/ChainSelectLink'
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center p-24">
-      <h1 className="mb-20 text-5xl font-semibold">Venture Miner</h1>
-      <section className="w-full grid grid-cols-4 gap-4">
+    <main className="flex min-h-screen flex-col items-center py-24 px-5 sm:px-20 2xl:px-24">
+      <h1 className="mb-20 text-4xl sm:text-5xl font-semibold">Venture Miner</h1>
+      <section className="w-full grid xl:grid-cols-4 gap-4">
         <ChainSelectLink
           href={'/chain/eth'}
           chainName={'Ethereum'}
@@ -18,12 +18,12 @@ export default function Home() {
           }
         />
 
-        <div className="col-span-3">
+        <div className="xl:col-span-3">
           <EthStat />
         </div>
       </section>
 
-      <section className="mt-20 w-full grid grid-cols-4 gap-4">
+      <section className="mt-20 w-full grid xl:grid-cols-4 gap-4">
         <ChainSelectLink
           href={'/chain/opt'}
           chainName={'Optimism'}
@@ -34,7 +34,7 @@ export default function Home() {
             'Explore and search the Optimism (Ethereum L2) for transactions, addresses, tokens, prices.'
           }
         />
-        <div className="col-span-3">
+        <div className="xl:col-span-3">
           <OptimismStat />
         </div>
       </section>
