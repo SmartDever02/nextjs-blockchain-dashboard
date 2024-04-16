@@ -7,6 +7,7 @@ interface Props {
   imageSrc: string
   href: string
   description: string
+  dataTestid: string;
 }
 
 export default function ChainSelectLink(props: Props) {
@@ -14,6 +15,7 @@ export default function ChainSelectLink(props: Props) {
     <Link
       href={props.href}
       className="group p-5 shadow-primary-card border border-primary-border rounded-xl hover:border-white/20 transition-all duration-200 text-white flex flex-col gap-y-5 relative"
+      data-testid={props.dataTestid}
     >
       <Image
         src={props.imageSrc}

@@ -16,6 +16,7 @@ export default function Home() {
 
       <section className="w-full grid xl:grid-cols-4 gap-4">
         <ChainSelectLink
+          dataTestid='select-chain-eth'
           href={'/chain/eth'}
           chainName={'Ethereum'}
           imageSrc={'https://cdn.worldvectorlogo.com/logos/ethereum-eth.svg'}
@@ -31,6 +32,7 @@ export default function Home() {
 
       <section className="mt-20 w-full grid xl:grid-cols-4 gap-4">
         <ChainSelectLink
+          dataTestid='select-chain-opt'
           href={'/chain/opt'}
           chainName={'Optimism'}
           imageSrc={

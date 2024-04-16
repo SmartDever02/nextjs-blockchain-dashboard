@@ -20,7 +20,7 @@ interface IStatBoard extends IEtherStat {
 
 export default function StatBoard(props: IStatBoard) {
   return (
-    <StatContainer>
+    <StatContainer chain={props.chain}>
       <EtherPriceMarketContainer>
         <StatItem
           imageSrc={
@@ -57,6 +57,7 @@ export default function StatBoard(props: IStatBoard) {
             <Link
               href={`/chain/${props.chain.toLowerCase()}/txs`}
               className="text-sm text-white hover:underline"
+              data-testid={`txs-link-${props.chain.toLowerCase()}`}
             >
               {formatNumberWithCommas(props.total_transactions)}
             </Link>
@@ -73,12 +74,9 @@ export default function StatBoard(props: IStatBoard) {
           svgNode={<CubeTransparentIcon className="w-6 h-6" />}
           label="LAST FINALIZED BLOCK"
           value={() => (
-            <Link
-              href={`/chain/${props.chain.toLowerCase()}/blocks`}
-              className="text-sm text-white hover:underline"
-            >
+            <span className="text-sm">
               {formatNumberWithCommas(props.total_blocks)}
-            </Link>
+            </span>
           )}
         />
       </TransactionBlockContainer>
@@ -139,9 +137,12 @@ function StatHorizontalDivider() {
   return <hr className="my-5 border-primary-border" />
 }
 
-function StatContainer(props: PropsWithChildren) {
+function StatContainer(props: PropsWithChildren & { chain: string }) {
   return (
-    <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 bg-dark-bg border border-primary-border shadow-primary-card rounded-2xl p-5 sm:*:border-r *:border-r-primary-border">
+    <section
+      data-testid={`statboard-${props.chain.toLocaleLowerCase()}`}
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 bg-dark-bg border border-primary-border shadow-primary-card rounded-2xl p-5 sm:*:border-r *:border-r-primary-border"
+    >
       {props.children}
     </section>
   )
@@ -172,7 +173,7 @@ export function StatLoadingUI() {
     <p className="w-24 h-5 rounded bg-card-bg animate-pulse"></p>
   )
   return (
-    <StatContainer>
+    <StatContainer chain="">
       <EtherPriceMarketContainer>
         <StatItem
           imageSrc={
