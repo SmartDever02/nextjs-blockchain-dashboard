@@ -91,7 +91,7 @@ export default async function BlockDetail({
           <ListItemWrapper>
             <ListTitle>Fee Recipient:</ListTitle>
             <ListItemValueWrapper>
-              <Link href={'#' + data.miner.hash}>
+              <Link href={'/chain/eth/address/' + data.miner.hash}>
                 {data.miner.implementation_name || data.miner.hash}
               </Link>
             </ListItemValueWrapper>

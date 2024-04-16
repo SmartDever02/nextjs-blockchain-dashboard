@@ -56,7 +56,7 @@ export default async function SearchForm({ size }: Props) {
             className="peer w-full h-full bg-transparent rounded-sm focus:outline-primary-border outline-none transition-all duration-200 px-3 text-sm box-border"
           />
           {data?.results?.length ? (
-            <ul className="invisible opacity-0 peer-focus:visible peer-focus:opacity-100 transition-all duration-200 absolute w-full top-[34px] rounded-b-md bg-dark-bg border border-primary-border p-2 z-10 shadow-primary-card">
+            <ul className={cx("invisible opacity-0 peer-focus:visible peer-focus:opacity-100 transition-all duration-200 absolute w-full rounded-b-md bg-dark-bg border border-primary-border p-2 z-10 shadow-primary-card", size === 'sm' ? "top-[34px]" : "top-10")}>
               {data?.results?.map((item: IQuickSearchResult) => {
                 const data = analyzeQuickSearchResponse(item)
 
