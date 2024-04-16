@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers'
 import Link from 'next/link'
 import Image from 'next/image'
+import cx from 'classnames'
 
 import { fetchQuickSearchResult } from '@/services/eth'
 import SearchSubmitButton from '@/components/Search.Client.Button'
@@ -14,7 +15,11 @@ import {
   WalletIcon,
 } from '@heroicons/react/24/outline'
 
-export default async function SearchForm() {
+interface Props {
+  size?: 'sm' | 'lg'
+}
+
+export default async function SearchForm({ size }: Props) {
   async function quickSearch(formData: FormData) {
     'use server'
     const query = formData.get('query')
@@ -36,8 +41,13 @@ export default async function SearchForm() {
   } = JSON.parse(cookieStore.get('quicksearch')?.value || '[]')
 
   return (
-    <form action={quickSearch}>
-      <div className="h-12 max-w-[800px] w-full border border-primary-border rounded-lg bg-dark-bg flex gap-x-3 p-2">
+    <form action={quickSearch} className="max-w-[800px] w-full">
+      <div
+        className={cx(
+          'border border-primary-border rounded-lg bg-dark-bg flex gap-x-3 p-2',
+          size === 'sm' ? 'h-12' : 'h-14'
+        )}
+      >
         <label className="relative w-full h-full">
           <input
             autoComplete="off"
@@ -74,7 +84,7 @@ export default async function SearchForm() {
             </ul>
           ) : null}
         </label>
-        <SearchSubmitButton />
+        <SearchSubmitButton className={size === 'lg' ? "w-10 h-10" : undefined} />
       </div>
     </form>
   )
@@ -89,7 +99,15 @@ function SearchResponseItemAvatar(props: any) {
   }
   if (props.type === 'token') {
     return props.icon_url ? (
-      <Image width={16} height={16} alt={props.symbol} src={props.icon_url} className="w-4 h-4" quality={100} draggable={false} />
+      <Image
+        width={16}
+        height={16}
+        alt={props.symbol}
+        src={props.icon_url}
+        className="w-4 h-4"
+        quality={100}
+        draggable={false}
+      />
     ) : (
       <div className="w-4 h-4 rounded-full leading-4 text-center bg-primary">
         {props?.symbol.slice(0, 1)}

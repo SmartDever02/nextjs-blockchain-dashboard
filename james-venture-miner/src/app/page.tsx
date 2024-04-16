@@ -1,18 +1,24 @@
 import EthStat from '@/features/Stat'
 import OptimismStat from '@/features/Stat.Optimism'
 import ChainSelectLink from '@/components/ChainSelectLink'
+import SearchForm from '@/features/SearchForm'
 
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center py-24 px-5 sm:px-20 2xl:px-24">
-      <h1 className="mb-20 text-4xl sm:text-5xl font-semibold">Venture Miner</h1>
+      <h1 className="mb-9 text-4xl sm:text-5xl font-semibold">
+        Venture Miner
+      </h1>
+
+      <section className='flex justify-center w-full mb-20'>
+        <SearchForm size='lg' />
+      </section>
+
       <section className="w-full grid xl:grid-cols-4 gap-4">
         <ChainSelectLink
           href={'/chain/eth'}
           chainName={'Ethereum'}
-          imageSrc={
-            'https://cdn.worldvectorlogo.com/logos/ethereum-eth.svg'
-          }
+          imageSrc={'https://cdn.worldvectorlogo.com/logos/ethereum-eth.svg'}
           description={
             'Explore and search the Ethereum blockchain for transactions, addresses, tokens, prices.'
           }

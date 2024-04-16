@@ -8,7 +8,7 @@ export default function Banner() {
           The Ethereum Blockchain Explorer
         </h1>
 
-        <SearchForm />
+        <SearchForm size='sm' />
       </div>
     </div>
   )
