@@ -20,15 +20,27 @@ export async function fetchBlockLists(
   return data
 }
 
+interface IFetchTransactions {
+  filter: 'validated' | 'pending'
+  index?: number
+  block_number?: number
+  items_count?: number
+  init?: RequestInit
+}
+
 export async function fetchTransactionLists(
-  revalidate: number = 10
+  props?: IFetchTransactions
 ): Promise<IEthTransactionListResponse> {
-  const res = await fetch(
-    `${process.env.BASE_ETH_API_URL}/transactions?filter=validated`,
-    {
-      next: { revalidate },
+  const { init, ...other } = props || {}
+
+  let url = `${process.env.BASE_ETH_API_URL}/transactions?`
+  Object.entries(other).forEach(([key, value]) => {
+    if (!!value) {
+      url += `${key}=${value}&`
     }
-  )
+  })
+
+  const res = await fetch(url, init)
   const data: IEthTransactionListResponse = await res.json()
 
   return data
@@ -49,11 +61,14 @@ export async function fetchAccountInfo(
   address: string,
   revalidate: number = 60
 ): Promise<IEthAccount> {
-  const res = await fetch(`${process.env.BASE_ETH_API_URL}/addresses/${address}`, {
-    next: {
-      revalidate,
-    },
-  })
+  const res = await fetch(
+    `${process.env.BASE_ETH_API_URL}/addresses/${address}`,
+    {
+      next: {
+        revalidate,
+      },
+    }
+  )
   const data: IEthAccount = await res.json()
 
   return data
@@ -67,7 +82,9 @@ export async function fetchBlockDetail(hash: string): Promise<IEthBlock> {
 }
 
 export async function fetchQuickSearchResult(query: string) {
-  const res = await fetch(`${process.env.BASE_ETH_API_URL}/search/quick?q=${query}`)
+  const res = await fetch(
+    `${process.env.BASE_ETH_API_URL}/search/quick?q=${query}`
+  )
   const data: Array<
     | ISearchResultToken
     | ISearchResultAddressOrContract
@@ -104,5 +121,5 @@ export async function fetchTransactionChart() {
   )
   const data = await response.json()
 
-  return data;
+  return data
 }

@@ -1,5 +1,6 @@
 import cx from 'classnames'
 import { PropsWithChildren, Suspense } from 'react'
+import Link from 'next/link'
 import Image from 'next/image'
 
 import TransactionChart from '@/features/TransactionChart'
@@ -53,9 +54,12 @@ export default function StatBoard(props: IStatBoard) {
           svgNode={<ArrowsRightLeftIcon className="w-6 h-6" />}
           label="TRANSACTIONS"
           value={() => (
-            <p className="text-sm">
+            <Link
+              href={`/chain/${props.chain.toLowerCase()}/txs`}
+              className="text-sm text-white hover:underline"
+            >
               {formatNumberWithCommas(props.total_transactions)}
-            </p>
+            </Link>
           )}
           renderMore={() => (
             <div className="ml-auto flex flex-col items-end text-end">
@@ -69,9 +73,12 @@ export default function StatBoard(props: IStatBoard) {
           svgNode={<CubeTransparentIcon className="w-6 h-6" />}
           label="LAST FINALIZED BLOCK"
           value={() => (
-            <p className="text-sm">
+            <Link
+              href={`/chain/${props.chain.toLowerCase()}/blocks`}
+              className="text-sm text-white hover:underline"
+            >
               {formatNumberWithCommas(props.total_blocks)}
-            </p>
+            </Link>
           )}
         />
       </TransactionBlockContainer>

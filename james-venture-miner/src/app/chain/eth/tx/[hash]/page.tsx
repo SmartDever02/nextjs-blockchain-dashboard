@@ -5,6 +5,7 @@ import {
   BlockDetailListItemValueWrapper as ListItemValueWrapper,
   BlockDetailListDivider as ListDivider,
 } from '@/components/DetailViewCard'
+import { IEthTransaction } from '@/types/eth.tx'
 
 import {
   getAgeFromTimestamp,
@@ -21,7 +22,7 @@ export default async function TransactionDetail({
   const res = await fetch(
     `https://eth.blockscout.com/api/v2/transactions/${params.hash}`
   )
-  const data = await res.json()
+  const data: IEthTransaction = await res.json()
 
   return (
     <main className="container mx-auto pb-12">
@@ -69,7 +70,7 @@ export default async function TransactionDetail({
             <ListTitle>From:</ListTitle>
             <ListItemValueWrapper>
               <Link href={'/chain/eth/address/' + data.from.hash}>
-                {data.from.ens_domain_name || data.from.hash}
+                {data.from.name || data.from.hash}
               </Link>
             </ListItemValueWrapper>
           </ListItemWrapper>
@@ -79,7 +80,7 @@ export default async function TransactionDetail({
             <ListItemValueWrapper>
               {data.to && (
                 <Link href={'/chain/eth/address/' + data.to.hash}>
-                  {data.to.ens_domain_name || data.to.hash}
+                  {data.to.name || data.to.hash}
                 </Link>
               )}
 
@@ -89,7 +90,7 @@ export default async function TransactionDetail({
                   <Link
                     href={'/chain/eth/address/' + data.created_contract.hash}
                   >
-                    {data.created_contract.ens_domain_name ||
+                    {data.created_contract.name ||
                       data.created_contract.hash}
                   </Link> Created
                   {` ]`}
@@ -111,9 +112,9 @@ export default async function TransactionDetail({
           <ListItemWrapper>
             <ListTitle>Gas Price:</ListTitle>
             <ListItemValueWrapper>
-              {getGweiFromWei(data.gas_price, true, 20)}
+              {getGweiFromWei(data.gas_used, true, 20)}
               <span className="text-gray-bb pl-1">
-                ({getEtherFromWei(data.gas_price, true, 20)})
+                ({getEtherFromWei(data.gas_used, true, 20)})
               </span>
             </ListItemValueWrapper>
           </ListItemWrapper>

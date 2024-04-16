@@ -1,7 +1,10 @@
+'use client'
+
 import Link from 'next/link'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 import cx from 'classnames'
 import type { PropsWithChildren } from 'react'
+import { useRouter } from 'next/navigation'
 
 interface Props {
   direction: 'left' | 'right'
@@ -28,19 +31,44 @@ export default function ArrowLink(props: Props) {
 }
 
 interface BorderedLinkProps extends PropsWithChildren {
-  href: string;
-  ariaLabel?: string;
-  square?: boolean;
+  href?: string
+  ariaLabel?: string
+  square?: boolean
+  onClick?: () => void
 }
 
 export function BorderedLink(props: BorderedLinkProps) {
+  const className = cx(
+    'rounded py-1 border-primary-border border hover:bg-primary hover:text-white transition-all duration-200',
+    props.square ? 'px-1 flex items-center justify-center' : 'px-2'
+  )
+
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    if(!props.onClick) return;
+    e.preventDefault()
+    props.onClick()
+  }
+
   return (
     <Link
-      href={props.href}
-      className={cx('rounded py-1 border-primary-border border hover:bg-primary hover:text-white transition-all duration-200', props.square ? 'px-1' : 'px-2')}
+      href={onclick ? '' : props.href || ""}
+      className={className}
       aria-label={props.ariaLabel}
+      onClick={handleClick}
     >
       {props.children}
     </Link>
+  )
+}
+
+export function BackHistoryBorderedLink(props: BorderedLinkProps) {
+  const router = useRouter()
+  return (
+    <BorderedLink
+      {...props}
+      onClick={() => {
+        router.back()
+      }}
+    ></BorderedLink>
   )
 }

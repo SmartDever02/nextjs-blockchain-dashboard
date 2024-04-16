@@ -1,7 +1,12 @@
-import TransactionDetailList from '@/features/TransactionDetailList';
-import Link from 'next/link';
+import FilterLink from '@/components/FilterLink'
+import TransactionDetailList from '@/features/TransactionDetailList'
 
-export default async function Transactions() {
+export default async function Transactions({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | string[] | undefined }
+}) {
+  const filter = searchParams?.filter?.toString();
 
   return (
     <main className="container mx-auto pb-12">
@@ -9,11 +14,19 @@ export default async function Transactions() {
         <h1 className="font-normal text-lg">Transactions</h1>
       </section>
 
-      <div className='mt-10 flex gap-x-2 mb-2'>
-        <Link href='#validated'>Validated</Link>
-        <Link href='#validated'>Pending</Link>
+      <div className="mt-10 flex gap-x-2 mb-5">
+        <FilterLink isCurrentFilter={filter === 'validated'} href='/chain/eth/txs?filter=validated'>
+          Validated
+        </FilterLink>
+        <FilterLink isCurrentFilter={filter === 'pending'} href='/chain/eth/txs?filter=pending'>
+        Pending
+        </FilterLink>
       </div>
-      <TransactionDetailList />
+      <TransactionDetailList
+        p={searchParams?.p?.toString()}
+        index={searchParams?.index?.toString()}
+        block_number={searchParams?.block_number?.toString()}
+      />
     </main>
   )
 }

@@ -1,13 +1,22 @@
 import Link from 'next/link'
 
 import CardList from '@/components/CardList'
-import { getAgeFromTimestamp, getEtherFromWei, shortenAddress } from '@/utils/eth'
+import {
+  getAgeFromTimestamp,
+  getEtherFromWei,
+  shortenAddress,
+} from '@/utils/eth'
 import { ArrowsRightLeftIcon } from '@heroicons/react/24/outline'
 
 import { fetchTransactionLists } from '@/services/eth'
 
 export default async function TransactionList({ chain }: { chain: string }) {
-  const { items } = await fetchTransactionLists(10)
+  const { items } = await fetchTransactionLists({
+    filter: 'validated',
+    init: {
+      next: { revalidate: 10 },
+    },
+  })
 
   return (
     <CardList

@@ -7,7 +7,6 @@ import {
 } from '@/utils/eth'
 import Link from 'next/link'
 import cx from 'classnames'
-import ArrowLink from '@/components/ArrowLink'
 import {
   DetailViewCardContainer,
   BlockDetailListItemWrapper as ListItemWrapper,
@@ -17,6 +16,7 @@ import {
 } from '@/components/DetailViewCard'
 import { fetchBlockDetail } from '@/services/eth'
 import { ClockIcon, CubeTransparentIcon } from '@heroicons/react/24/outline'
+import ArrowLink from '@/features/ArrowLink'
 
 export default async function BlockDetail({
   params,
