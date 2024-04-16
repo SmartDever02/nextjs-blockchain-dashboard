@@ -1,5 +1,5 @@
 import FilterLink from '@/components/FilterLink'
-import TransactionAllList from '@/features/TransactionAllList'
+import TransactionAllList, { ITransactionAllList } from '@/features/TransactionAllList'
 
 export default async function Transactions({
   searchParams,
@@ -33,6 +33,7 @@ export default async function Transactions({
         items_count={Number(searchParams?.items_count?.toString())}
         index={Number(searchParams?.index?.toString())}
         block_number={Number(searchParams?.block_number?.toString())}
+        filter={searchParams?.filter?.toString() as ITransactionAllList['filter'] }
       />
     </main>
   )

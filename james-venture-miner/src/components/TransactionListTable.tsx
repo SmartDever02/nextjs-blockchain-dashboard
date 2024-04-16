@@ -2,7 +2,12 @@ import { CardWrapper } from '@/components/CardList'
 import { BackHistoryBorderedLink, BorderedLink } from '@/features/ArrowLink'
 import { ITransactionAllList } from '@/features/TransactionAllList'
 import { IEthTransactionListResponse } from '@/types/eth.tx'
-import { getAgeFromTimestamp, getEtherFromWei, getGweiFromWei, shortenAddress } from '@/utils/eth'
+import {
+  getAgeFromTimestamp,
+  getEtherFromWei,
+  getGweiFromWei,
+  shortenAddress,
+} from '@/utils/eth'
 import {
   ArrowDownIcon,
   ChevronLeftIcon,
@@ -10,19 +15,20 @@ import {
 } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 
-
-export default async function TransactionlistTable(props: ITransactionAllList & IEthTransactionListResponse) {
-  const { block_number, index, items_count, address } = props || {}
+export default async function TransactionlistTable(
+  props: ITransactionAllList & IEthTransactionListResponse
+) {
+  const { block_number, index, items_count, address, filter } = props || {}
 
   return (
-    <CardWrapper className='w-full overflow-x-auto relative bg-card-bg'>
+    <CardWrapper className="w-full overflow-x-auto relative bg-card-bg">
       <div className="p-4 flex text-sm gap-x-1 sticky left-0">
         <BorderedLink href="#">
           First
           <span className="sr-only">First</span>
         </BorderedLink>
 
-        <BackHistoryBorderedLink href='' ariaLabel="Previous" square>
+        <BackHistoryBorderedLink href="" ariaLabel="Previous" square>
           <ChevronLeftIcon className="w-4 h-4" />
           <span className="sr-only">Previous</span>
         </BackHistoryBorderedLink>
@@ -34,7 +40,7 @@ export default async function TransactionlistTable(props: ITransactionAllList & 
         <BorderedLink
           href={`?p=${
             Number(props.p || 1) + 1
-          }&block_number=${block_number}&index=${index}&items_count=${items_count}&address=${address}`}
+          }&block_number=${block_number}&index=${index}&items_count=${items_count}&address=${address}&filter=${filter}`}
           ariaLabel="Next"
           square
         >
@@ -55,7 +61,7 @@ export default async function TransactionlistTable(props: ITransactionAllList & 
             <th>Fee</th>
           </tr>
         </thead>
-        <tbody className='relative'>
+        <tbody className="relative">
           {props?.items?.map((item) => (
             <tr key={item.hash} className="*:p-2">
               <td className="first:pl-4">
@@ -78,27 +84,34 @@ export default async function TransactionlistTable(props: ITransactionAllList & 
               <td className="flex gap-x-2">
                 <ArrowDownIcon className="w-4 h-4 mt-[2px]" />
                 <div className="flex flex-col gap-1">
-                  <Link href={'#'}>
+                  <Link href={'/chain/eth/address/' + item.from.hash}>
                     <span>
                       {item.from.name || shortenAddress(item.from.hash, 10, 6)}
                     </span>
                   </Link>
-                  <Link href={'#'}>
-                    <span>{item.to.name || shortenAddress(item.to.hash, 10, 6)}</span>
+                  <Link href={'/chain/eth/address/' + item.to.hash}>
+                    <span>
+                      {item.to.name || shortenAddress(item.to.hash, 10, 6)}
+                    </span>
                   </Link>
                 </div>
               </td>
-              <td>
-                {getEtherFromWei(item.value, true, 10)}
-              </td>
-              <td className='last:pr-4'>
+              <td>{getEtherFromWei(item.value, true, 10)}</td>
+              <td className="last:pr-4">
                 {getGweiFromWei(item.gas_used, true)}
               </td>
             </tr>
           ))}
+
+          {!props.items.length && (
+            <tr>
+              <td colSpan={7} className="py-10 px-4 text-center">
+                There are no transactions.
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </CardWrapper>
   )
 }
-

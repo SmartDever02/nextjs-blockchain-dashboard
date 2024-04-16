@@ -47,8 +47,6 @@ export async function fetchTransactionLists(
     url = url.slice(0, -1) // Removes the last character
   }
 
-  console.log('url: ', url)
-
   const res = await fetch(url, init)
   const data: IEthTransactionListResponse = await res.json()
 
