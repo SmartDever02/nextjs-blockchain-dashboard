@@ -28,8 +28,8 @@ export default async function TransactionDetailList(props: Props) {
   const { block_number, index, items_count } = data?.next_page_params || {}
 
   return (
-    <CardWrapper>
-      <div className="p-4 flex justify-end text-sm gap-x-1">
+    <CardWrapper className='w-full overflow-x-auto relative'>
+      <div className="p-4 flex text-sm gap-x-1 sticky left-0">
         <BorderedLink href="#">
           First
           <span className="sr-only">First</span>
@@ -56,7 +56,7 @@ export default async function TransactionDetailList(props: Props) {
         </BorderedLink>
       </div>
 
-      <table className="w-full text-sm border-t border-t-primary-border">
+      <table className="text-sm border-t border-t-primary-border w-full">
         <thead className="border-b border-b-primary-border">
           <tr className="*:p-2 *:text-left">
             <th className="first:pl-4">Txn hash</th>

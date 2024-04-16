@@ -51,7 +51,7 @@ export function BorderedLink(props: BorderedLinkProps) {
 
   return (
     <Link
-      href={onclick ? '' : props.href || ""}
+      href={props.onClick ? '' : props.href || ""}
       className={className}
       aria-label={props.ariaLabel}
       onClick={handleClick}

@@ -6,7 +6,7 @@ export default async function Transactions({
 }: {
   searchParams?: { [key: string]: string | string[] | undefined }
 }) {
-  const filter = searchParams?.filter?.toString();
+  const filter = searchParams?.filter?.toString() || 'validated';
 
   return (
     <main className="container mx-auto pb-12">

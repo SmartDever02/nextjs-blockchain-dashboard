@@ -35,9 +35,13 @@ export default function CardList({
   )
 }
 
-export function CardWrapper(props: PropsWithChildren) {
+interface Props extends PropsWithChildren {
+  className?: string
+}
+
+export function CardWrapper(props: Props) {
   return (
-    <section className="shadow-primary-card border border-primary-border rounded-lg">
+    <section className={"shadow-primary-card border border-primary-border rounded-lg " + props.className}>
       {props.children}
     </section>
   )
