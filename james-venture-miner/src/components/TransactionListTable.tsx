@@ -1,5 +1,7 @@
 import { CardWrapper } from '@/components/CardList'
-import { fetchTransactionLists } from '@/services/eth'
+import { BackHistoryBorderedLink, BorderedLink } from '@/features/ArrowLink'
+import { ITransactionAllList } from '@/features/TransactionAllList'
+import { IEthTransactionListResponse } from '@/types/eth.tx'
 import { getAgeFromTimestamp, getEtherFromWei, getGweiFromWei, shortenAddress } from '@/utils/eth'
 import {
   ArrowDownIcon,
@@ -7,28 +9,13 @@ import {
   ChevronRightIcon,
 } from '@heroicons/react/24/outline'
 import Link from 'next/link'
-import { BackHistoryBorderedLink, BorderedLink } from './ArrowLink'
 
-interface Props {
-  filter?: 'pending' | 'validated'
-  address?: string
-  p?: string
-  items_count?: number
-  index?: string
-  block_number?: string
-}
 
-export default async function TransactionDetailList(props: Props) {
-  const data = await fetchTransactionLists({
-    filter: props.filter || 'validated',
-    init: {
-      cache: 'no-store',
-    },
-  })
-  const { block_number, index, items_count } = data?.next_page_params || {}
+export default async function TransactionlistTable(props: ITransactionAllList & IEthTransactionListResponse) {
+  const { block_number, index, items_count, address } = props || {}
 
   return (
-    <CardWrapper className='w-full overflow-x-auto relative'>
+    <CardWrapper className='w-full overflow-x-auto relative bg-card-bg'>
       <div className="p-4 flex text-sm gap-x-1 sticky left-0">
         <BorderedLink href="#">
           First
@@ -46,8 +33,8 @@ export default async function TransactionDetailList(props: Props) {
 
         <BorderedLink
           href={`?p=${
-            Number(props.p || 0) + 1
-          }&block_number=${block_number}&index=${index}&items_count=${items_count}`}
+            Number(props.p || 1) + 1
+          }&block_number=${block_number}&index=${index}&items_count=${items_count}&address=${address}`}
           ariaLabel="Next"
           square
         >
@@ -68,8 +55,8 @@ export default async function TransactionDetailList(props: Props) {
             <th>Fee</th>
           </tr>
         </thead>
-        <tbody>
-          {data.items.map((item) => (
+        <tbody className='relative'>
+          {props?.items?.map((item) => (
             <tr key={item.hash} className="*:p-2">
               <td className="first:pl-4">
                 <Link href={'/chain/eth/tx/' + item.hash}>
@@ -114,3 +101,4 @@ export default async function TransactionDetailList(props: Props) {
     </CardWrapper>
   )
 }
+

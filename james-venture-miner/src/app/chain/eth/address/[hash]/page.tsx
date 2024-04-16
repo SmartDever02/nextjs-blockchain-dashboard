@@ -9,11 +9,12 @@ import {
 } from '@/utils/eth'
 
 import { fetchAccountCounterInfo, fetchAccountInfo } from '@/services/eth'
-import type { PropsWithChildren } from 'react'
+import { Suspense, type PropsWithChildren } from 'react'
 import {
   ArrowTrendingUpIcon,
   InformationCircleIcon,
 } from '@heroicons/react/24/outline'
+import TransactionDetailList from '@/features/TransactionAllList'
 
 export default async function AccountDetail({
   params,
@@ -29,14 +30,14 @@ export default async function AccountDetail({
   return (
     <main className="container mx-auto pb-12">
       <section className="py-5 flex flex-col gap-y-1 border-b border-b-primary-border">
-        <div className="flex items-end gap-x-2">
+        <div className="flex flex-col sm:flex-row sm:items-end gap-2">
           <h1 className="font-normal text-lg">Contract</h1>
           <span className="text-gray-bb text-sm leading-7">{params.hash}</span>
         </div>
       </section>
 
-      <div className="mt-10 grid grid-cols-2 lg:grid-cols-3 gap-x-2">
-        <DetailViewCardContainer className='relative group overflow-hidden' >
+      <section className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-3">
+        <DetailViewCardContainer className="relative group overflow-hidden">
           <AddressInfoCard heading="Overview">
             <div>
               <InfoTitle>ETH BALANCE</InfoTitle>
@@ -104,7 +105,7 @@ export default async function AccountDetail({
           <InformationCircleIcon className={animatableIconClass} />
         </DetailViewCardContainer>
 
-        <DetailViewCardContainer className="relative group overflow-hidden">
+        <DetailViewCardContainer className="relative group overflow-hidden sm:col-span-2 lg:col-span-1">
           <AddressInfoCard heading="Counting Info">
             <div className="flex flex-col gap-y-2">
               <div>
@@ -127,9 +128,13 @@ export default async function AccountDetail({
             className={`-rotate-[125deg] ${animatableIconClass}`}
           />
         </DetailViewCardContainer>
-      </div>
+      </section>
 
-      <div></div>
+      <section className="mt-10">
+        <Suspense fallback={<>Loading...</>}>
+          <TransactionDetailList address={params.hash} filter='from | to' />
+        </Suspense>
+      </section>
     </main>
   )
 }

@@ -15,7 +15,7 @@ export default async function EtherLayout({
 
   return (
     <>
-      <section className="sticky top-0 left-0 border-b border-b-primary-border bg-dark-bg z-10">
+      <section className="sticky top-0 left-0 border-b border-b-primary-border bg-dark-bg z-30">
         <div className="mx-auto container py-1 h-12 flex items-center text-xs">
           <Link href='/' className='mr-5'>
             <HomeIcon className='w-5 h-5 text-white' />

@@ -1,12 +1,12 @@
 import FilterLink from '@/components/FilterLink'
-import TransactionDetailList from '@/features/TransactionDetailList'
+import TransactionAllList from '@/features/TransactionAllList'
 
 export default async function Transactions({
   searchParams,
 }: {
   searchParams?: { [key: string]: string | string[] | undefined }
 }) {
-  const filter = searchParams?.filter?.toString() || 'validated';
+  const filter = searchParams?.filter?.toString() || 'validated'
 
   return (
     <main className="container mx-auto pb-12">
@@ -15,17 +15,24 @@ export default async function Transactions({
       </section>
 
       <div className="mt-10 flex gap-x-2 mb-5">
-        <FilterLink isCurrentFilter={filter === 'validated'} href='/chain/eth/txs?filter=validated'>
+        <FilterLink
+          isCurrentFilter={filter === 'validated'}
+          href="/chain/eth/txs?filter=validated"
+        >
           Validated
         </FilterLink>
-        <FilterLink isCurrentFilter={filter === 'pending'} href='/chain/eth/txs?filter=pending'>
-        Pending
+        <FilterLink
+          isCurrentFilter={filter === 'pending'}
+          href="/chain/eth/txs?filter=pending"
+        >
+          Pending
         </FilterLink>
       </div>
-      <TransactionDetailList
+      <TransactionAllList
         p={searchParams?.p?.toString()}
-        index={searchParams?.index?.toString()}
-        block_number={searchParams?.block_number?.toString()}
+        items_count={Number(searchParams?.items_count?.toString())}
+        index={Number(searchParams?.index?.toString())}
+        block_number={Number(searchParams?.block_number?.toString())}
       />
     </main>
   )

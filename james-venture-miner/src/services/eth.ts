@@ -21,24 +21,33 @@ export async function fetchBlockLists(
 }
 
 interface IFetchTransactions {
-  filter: 'validated' | 'pending'
+  filter: 'validated' | 'pending' | 'from | to'
   index?: number
   block_number?: number
   items_count?: number
   init?: RequestInit
+  address?: string
 }
 
 export async function fetchTransactionLists(
   props?: IFetchTransactions
 ): Promise<IEthTransactionListResponse> {
-  const { init, ...other } = props || {}
+  const { init, address, ...other } = props || {}
 
-  let url = `${process.env.BASE_ETH_API_URL}/transactions?`
+  let url = `${process.env.BASE_ETH_API_URL}${
+    address ? '/addresses/' + address : ''
+  }/transactions?`
   Object.entries(other).forEach(([key, value]) => {
     if (!!value) {
       url += `${key}=${value}&`
     }
   })
+
+  if (url.endsWith('&')) {
+    url = url.slice(0, -1) // Removes the last character
+  }
+
+  console.log('url: ', url)
 
   const res = await fetch(url, init)
   const data: IEthTransactionListResponse = await res.json()
