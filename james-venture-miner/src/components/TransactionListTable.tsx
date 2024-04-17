@@ -63,10 +63,10 @@ export default async function TransactionlistTable(
         </thead>
         <tbody className="relative">
           {props?.items?.map((item) => (
-            <tr key={item.hash} className="*:p-2">
+            <tr key={item?.hash} className="*:p-2">
               <td className="first:pl-4">
-                <Link href={'/chain/eth/tx/' + item.hash}>
-                  {shortenAddress(item.hash, 10, 4)}
+                <Link href={'/chain/eth/tx/' + item?.hash}>
+                  {shortenAddress(item?.hash, 10, 4)}
                 </Link>
                 <div className="text-xs text-gray-bb">
                   {getAgeFromTimestamp(item.timestamp)}
@@ -84,16 +84,18 @@ export default async function TransactionlistTable(
               <td className="flex gap-x-2">
                 <ArrowDownIcon className="w-4 h-4 mt-[2px]" />
                 <div className="flex flex-col gap-1">
-                  <Link href={'/chain/eth/address/' + item.from.hash}>
+                  <Link href={'/chain/eth/address/' + item.from?.hash}>
                     <span>
-                      {item.from.name || shortenAddress(item.from.hash, 10, 6)}
+                      {item.from.name || shortenAddress(item.from?.hash, 10, 6)}
                     </span>
                   </Link>
-                  <Link href={'/chain/eth/address/' + item.to.hash}>
-                    <span>
-                      {item.to.name || shortenAddress(item.to.hash, 10, 6)}
-                    </span>
-                  </Link>
+                  {item.to && (
+                    <Link href={'/chain/eth/address/' + item.to?.hash}>
+                      <span>
+                        {item.to?.name || shortenAddress(item.to?.hash, 10, 6)}
+                      </span>
+                    </Link>
+                  )}
                 </div>
               </td>
               <td>{getEtherFromWei(item.value, true, 10)}</td>

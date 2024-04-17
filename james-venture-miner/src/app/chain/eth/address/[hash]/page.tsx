@@ -15,6 +15,7 @@ import {
   InformationCircleIcon,
 } from '@heroicons/react/24/outline'
 import TransactionDetailList from '@/features/TransactionAllList'
+import Spinner from '@/components/Spinner'
 
 export default async function AccountDetail({
   params,
@@ -131,8 +132,14 @@ export default async function AccountDetail({
       </section>
 
       <section className="mt-10">
-        <Suspense fallback={<>Loading...</>}>
-          <TransactionDetailList address={params.hash} filter='from | to' />
+        <Suspense
+          fallback={
+            <div className='pt-20 sm:pt-40 w-full flex justify-center'>
+              <Spinner />
+            </div>
+          }
+        >
+          <TransactionDetailList address={params.hash} filter="from | to" />
         </Suspense>
       </section>
     </main>

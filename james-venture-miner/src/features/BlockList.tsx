@@ -10,7 +10,7 @@ import {
 import { fetchBlockLists } from '@/services/eth'
 import { CubeTransparentIcon } from '@heroicons/react/24/outline'
 
-export default async function BlockList({ chain }: { chain: string }) {
+export default async function BlockList() {
   const data = await fetchBlockLists(15)
 
   return (

@@ -10,7 +10,7 @@ import { ArrowsRightLeftIcon } from '@heroicons/react/24/outline'
 
 import { fetchTransactionLists } from '@/services/eth'
 
-export default async function TransactionList({ chain }: { chain: string }) {
+export default async function TransactionList() {
   const { items } = await fetchTransactionLists({
     filter: 'validated',
     init: {
