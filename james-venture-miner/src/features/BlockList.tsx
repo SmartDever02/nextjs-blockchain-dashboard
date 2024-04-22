@@ -31,7 +31,7 @@ export default async function BlockList() {
               <div className="max-sm:hidden min-w-8 h-8 xl:min-w-12 xl:h-12 rounded-lg bg-[#121212] flex justify-center items-center">
                 <CubeTransparentIcon className="w-5 h-5 xl:w-6 xl:h-6 opacity-70" />
               </div>
-              <div className="flex sm:flex-col items-end gap-1">
+              <div className="flex sm:flex-col max-sm:items-end gap-1">
                 <span className="sm:hidden text-sm">Block</span>
                 <Link
                   href={'/chain/eth/block/' + item.height}
